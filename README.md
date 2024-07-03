@@ -1,21 +1,25 @@
-Resume Generator
-It uses the pdfkit library to create the pdf document
+## Resume Generator
+**It uses the pdfkit library to create the pdf document and axois library to extraxt the information form url.**
 
-Overview
-The Resume Generator is a command-line tool designed to simplify the process of creating professional resumes. It takes two user inputs
+### Overview
+- The Resume Generator pull all the necessary information from a raw json url, and creates a resume that gets saved in the current directory the file is in.
+- The function that creates resume only have one argument that is json file name.
 
-first it takes raw url to json file or path to json file
-secondly it takes the output path along with output file name followed by '.pdf'
-Overview of files
-jsonData.js => contains the code to extract the json data from url or path and write it to realInfo.json.
-resume.js => contains the code for generating resume from the json data.
-resumeGenerator.js => contains the code for validating the json url/path and output file and activating the resume.js for resume creation
-Features
-Easy-to-use command-line interface.
-Support for file format PDF
-Installation
-git clone https://github.com/itsspyner/ResumeGenerator_with_different_links.git
-cd ResumeGenerator_with_different_links
-npm install
-Implementation of the program
-node resumeGenerator.js <url_to_json_file or path_to_json_file> <name_of_the_output_file.pdf>
+### Overview of files
+- index.js => It is the main file that gets the information from url and creates the resume.
+- resumeCreator.js => It contains the function that creates resume.
+
+### Features
+- Easy-to-use
+- Support for file format PDF
+- Takes input as json file
+
+### Installation
+- git clone https://github.com/itsspyner/webServer.git
+- cd webServer
+- npm install
+
+### Implementation of the program
+- node index.js
+- Then head to browser and type (localhost:3000)
+- The the resume will be in the current directory you are in
