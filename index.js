@@ -10,12 +10,10 @@ http.createServer((req, res) => {
             const response = await axios.get(url, { responseType: 'arraybuffer' });
             const fileData = Buffer.from(response.data, 'binary');
             await fs.writeFile('./file.json', fileData);
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end("JSON file saved");
             resume.resume('./file.json');
         } catch (err) {
             console.error(err);
-            res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end("Failed to save JSON file");
         }
     }
