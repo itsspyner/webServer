@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Writable } = require('stream');
-const { resume } = require('./resumeGenerator');
+const { resume } = require('./resumeCreator');
 
 const app = express();
 app.use(bodyParser.json());
