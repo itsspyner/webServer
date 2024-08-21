@@ -1,23 +1,34 @@
-const http = require('http');
-const fs = require('fs').promises;
-const axios = require('axios');
-const resume = require('./resume.js');
+const express = require('express');
+const bodyParser = require('body-parser');
+const { Writable } = require('stream');
+const { resume } = require('./resumeGenerator');
 
-http.createServer((req, res) => {
-    async function main() {
-        try {
-            const url = "https://raw.githubusercontent.com/itsspyner/resume-generator/main/resume/resumeInfo.json";
-            const response = await axios.get(url, { responseType: 'arraybuffer' });
-            const fileData = Buffer.from(response.data, 'binary');
-            await fs.writeFile('./file.json', fileData);
-            res.end("JSON file saved");
-            resume.resume('./file.json');
-        } catch (err) {
-            console.error(err);
-            res.end("Failed to save JSON file");
+const app = express();
+app.use(bodyParser.json());
+
+app.post('/json', (req, res) => {
+    const jsonData = req.body;
+
+    const doc = resume(jsonData);
+
+    let pdfChunks = [];
+    const bufferStream = new Writable({
+        write(chunk,encodine, next) {
+            pdfChunks.push(chunk);
+            next();
         }
-    }
-    main();
-}).listen(3000, () => {
-    console.log("Server listening on port 3000");
+    });
+
+    doc.pipe(bufferStream);
+
+    bufferStream.on('finish', () => {
+        const pdfBuffer = Buffer.concat(pdfChunks);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.send(pdfBuffer);
+
+    });
+});
+
+app.listen(4000, () => {
+    console.log("Listening on port 4000");
 });
