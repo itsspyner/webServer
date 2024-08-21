@@ -22,7 +22,7 @@
 - npm install
 
 ### Implementation of the program
-- node index.js
+- node index.js its should say "Listening on port 4000".
 - Then head to postman->file hit new and click in http.
 - Then change the get request to post request and write (http://localhost:4000/json) in url.
 - Then in the body section choose raw and put the JSON resume data.
